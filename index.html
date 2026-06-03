@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Samuel Okodo — Software Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0f1e;
+      --surface: #111827;
+      --border: #1e2d45;
+      --accent: #38bdf8;
+      --accent2: #818cf8;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --green: #34d399;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── GLOW ── */
+    .glow-orb {
+      position: fixed;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 70%);
+      top: -200px; left: -200px;
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      to { transform: translate(120px, 80px); }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      backdrop-filter: blur(16px);
+      background: rgba(10,15,30,0.75);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── WRAPPER ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 80px;
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      border: 1px solid rgba(56,189,248,0.3);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.8;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      border-radius: 6px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 600;
+      border: none;
+    }
+    .btn-primary:hover { background: #7dd3fc; transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ── SECTION ── */
+    section { padding: 6rem 0; }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      color: var(--text);
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .about-text { color: var(--muted); line-height: 1.9; font-size: 0.88rem; }
+    .about-text p + p { margin-top: 1rem; }
+    .stack-list {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+    }
+    .stack-chip {
+      font-size: 0.75rem;
+      padding: 0.4rem 0.9rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      background: var(--surface);
+      transition: all 0.2s;
+    }
+    .stack-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.8rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(56,189,248,0.25); }
+    .card:hover::before { transform: scaleX(1); }
+    .card-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .card-tag {
+      font-size: 0.68rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(56,189,248,0.08);
+      color: var(--accent);
+      border-radius: 3px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ── EXPERIENCE ── */
+    .timeline { position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 6px; bottom: 6px;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item {
+      padding-left: 2rem;
+      position: relative;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.5s ease both;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -4px; top: 6px;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+    }
+    .tl-date { font-size: 0.72rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+    .tl-role {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    .tl-company { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.6rem; }
+    .tl-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 3rem;
+      text-align: center;
+    }
+    .contact-box h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .contact-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; line-height: 1.8; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+    /* ── STATUS DOT ── */
+    .status {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; color: var(--green);
+      margin-top: 1.5rem;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      position: relative; z-index: 1;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-box { padding: 2rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-orb"></div>
+
+  <nav>
+    <div class="nav-logo">samuel.okodo</div>
+    <ul class="nav-links">
+      <li><a href="#about">about</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="wrapper">
+
+    <!-- HERO -->
+    <section id="hero">
+      <span class="tag">// available for opportunities</span>
+      <h1>Samuel<br><span>Okodo.</span></h1>
+      <p class="hero-sub">
+        Software Engineering student at Nile University of Nigeria.
+        I build clean, functional frontends and bring ideas to life through code.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+      <div class="status">
+        <span class="dot"></span>
+        Open to work · Nigeria (On-site / Hybrid)
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <p class="section-label">// 01. about</p>
+      <h2 class="section-title">Who I Am</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm a final-year Computer Software Engineering student with a passion for building products that are both technically solid and genuinely useful.</p>
+          <p>My journey includes frontend development on a real-world healthcare platform, as well as administrative internships that sharpened my communication and organisational skills.</p>
+          <p>I'm currently looking for opportunities where I can grow as a developer and contribute to meaningful projects.</p>
+        </div>
+        <div>
+          <p style="font-size:0.75rem; color:var(--accent); letter-spacing:0.12em; margin-bottom:1rem;">TECH STACK</p>
+          <div class="stack-list">
+            <span class="stack-chip">HTML5</span>
+            <span class="stack-chip">CSS3</span>
+            <span class="stack-chip">JavaScript</span>
+            <span class="stack-chip">Responsive Design</span>
+            <span class="stack-chip">Dashboard UI</span>
+            <span class="stack-chip">Git & GitHub</span>
+            <span class="stack-chip">REST APIs</span>
+            <span class="stack-chip">Front-End Dev</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <p class="section-label">// 02. projects</p>
+      <h2 class="section-title">Things I've Built</h2>
+      <div class="projects-grid">
+        <div class="card">
+          <div class="card-icon">💊</div>
+          <div class="card-title">Remedi Admin Portal</div>
+          <div class="card-desc">A healthcare management platform designed to improve medication adherence for patients with chronic illnesses. Built responsive dashboards for caregivers and healthcare professionals.</div>
+          <div class="card-tags">
+            <span class="card-tag">HTML/CSS/JS</span>
+            <span class="card-tag">Frontend</span>
+            <span class="card-tag">Healthcare</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🖥️</div>
+          <div class="card-title">Portfolio Website</div>
+          <div class="card-desc">This very site — a static portfolio built with pure HTML, CSS, and JavaScript. No frameworks, no dependencies. Clean, fast, and fully responsive.</div>
+          <div class="card-tags">
+            <span class="card-tag">HTML</span>
+            <span class="card-tag">CSS</span>
+            <span class="card-tag">JS</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title">More Coming Soon</div>
+          <div class="card-desc">Currently working on new projects. Check back soon or follow me on GitHub to get notified when new repos go live.</div>
+          <div class="card-tags">
+            <span class="card-tag">In Progress</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <p class="section-label">// 03. experience</p>
+      <h2 class="section-title">Where I've Worked</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-date">JUL 2025 – OCT 2025</div>
+          <div class="tl-role">Front Desk Staff</div>
+          <div class="tl-company">Profeild Nigeria LTD · Internship</div>
+          <div class="tl-desc">Managed daily front office operations, served as the primary contact for clients and staff, coordinated interdepartmental communication, and resolved customer concerns professionally.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">JUL 2024 – OCT 2024</div>
+          <div class="tl-role">Front Desk Staff</div>
+          <div class="tl-company">NIIT Port Harcourt Centre · Internship</div>
+          <div class="tl-desc">First point of contact for visitors and students, handled inquiries across phone, email, and in-person, assisted with registration processes, and maintained efficient office operations.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-date">2022 – PRESENT</div>
+          <div class="tl-role">B.Sc. Computer Software Engineering</div>
+          <div class="tl-company">Nile University of Nigeria</div>
+          <div class="tl-desc">Studying software engineering fundamentals, systems design, web technologies, and software development methodologies.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <p class="section-label">// 04. contact</p>
+      <h2 class="section-title">Let's Talk</h2>
+      <div class="contact-box">
+        <h3>Open to <span style="color:var(--accent)">Opportunities</span></h3>
+        <p>Whether it's a job, internship, freelance project, or just a conversation — my inbox is open. I'd love to hear from you.</p>
+        <div class="contact-links">
+          <a href="https://github.com/" target="_blank" class="btn btn-outline">GitHub</a>
+          <a href="https://linkedin.com/in/" target="_blank" class="btn btn-outline">LinkedIn</a>
+          <a href="mailto:your@email.com" class="btn btn-primary">Send Email</a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>Built with HTML, CSS & JS &nbsp;·&nbsp; Samuel Okodo © 2026</p>
+  </footer>
+
+  <script>
+    // Fade-in sections on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('section:not(#hero)').forEach(s => {
+      s.style.opacity = '0';
+      s.style.transform = 'translateY(30px)';
+      s.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(s);
+    });
+  </script>
+</body>
+</html>
